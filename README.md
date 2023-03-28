@@ -36,3 +36,5 @@ Just do ping 8.8.8.8 on cmd and you'll get the packets. Was easy!
 
 DNS -
 Weirdly I get two answers instead of a question and an answer, but I guess this works too!
+
+FTP - I wrote the code for opening on port 21 but I do not have the server set up! So could not sniff the packets
