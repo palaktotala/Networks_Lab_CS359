@@ -67,6 +67,14 @@ def ping_request_response(ip_address, interface):
     filter = "icmp and host " + "8.8.8.8"
     scapy.sniff(iface=interface, store=False, filter=filter, count=2, prn=save_ping_request_response)
 
+def save_ftp_connection_start(packet):
+    print(packet)
+    scapy.wrpcap("FTP_Connection_Start_2001CS84.pcap", packet, append=True)
+
+def ftp_connection_start(interface):
+    filter = "port 21"
+    scapy.sniff(iface=interface, store=False, filter=filter, count=3, prn=save_ftp_connection_start)
+
 def sniffer(interface, hostname):
     ip_address = socket.gethostbyname(hostname)
     print(ip_address)
@@ -76,7 +84,7 @@ def sniffer(interface, hostname):
     #arp_request_response(interface)
     var=0 #restore the value of var after it becomes 1
     #dns_request_response(interface)
-    ping_request_response(ip_address, interface)
+    #ping_request_response(ip_address, interface)
 
 hostname = "codeforces.com"
 interface = "Wi-Fi"
