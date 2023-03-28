@@ -22,3 +22,7 @@ TCP handshake start -
 4. Made a save function that saves the packets in a pcap as and when the tcp start function sends it the sniffed packets
 5. Ran the sniffer function
 6. Committed and Pushed this code to repo
+
+TCP handshake close - 
+1. Created two more functions for sniffing and saving the pcaps, filter was slightly tricky. 
+2. Because of my fluctuating net and luck, I could capture two FAs instead of FA, A :(
