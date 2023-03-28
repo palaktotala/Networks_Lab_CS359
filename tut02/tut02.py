@@ -47,15 +47,36 @@ def save_arp_request_response(packet):
 def arp_request_response(interface):
     filter = "arp"
     scapy.sniff(iface=interface, store=False, filter=filter, count=2, prn=save_arp_request_response)
-    
+
+def save_dns_request_response(packet):
+    global var
+    if(var<2 and packet.haslayer(scapy.DNSQR) and packet[scapy.DNSQR].qtype==1 and ("codeforces" in str(packet[scapy.DNSQR].qname))):
+        print(packet)
+        scapy.wrpcap("DNS_Request_Response_2001CS84.pcap", packet, append=True)
+        var=var+1
+
+def dns_request_response(interface):
+    filter = "port 53"
+    scapy.sniff(iface=interface, store=False, filter=filter, count=200, prn=save_dns_request_response)
+
+def save_ping_request_response(packet):
+    print(packet)
+    scapy.wrpcap("PING_Request_Response_2001CS84.pcap", packet, append=True)
+
+def ping_request_response(ip_address, interface):
+    filter = "icmp and host " + "8.8.8.8"
+    scapy.sniff(iface=interface, store=False, filter=filter, count=2, prn=save_ping_request_response)
+
 def sniffer(interface, hostname):
     ip_address = socket.gethostbyname(hostname)
     print(ip_address)
-    tcp_3_way_handshake_start(ip_address, interface)
-    tcp_handshake_close(ip_address, interface)
-    arp(interface)
-    arp_request_response(interface)
+    #tcp_3_way_handshake_start(ip_address, interface)
+    #tcp_handshake_close(ip_address, interface)
+    #arp(interface)
+    #arp_request_response(interface)
     var=0 #restore the value of var after it becomes 1
+    #dns_request_response(interface)
+    ping_request_response(ip_address, interface)
 
 hostname = "codeforces.com"
 interface = "Wi-Fi"
