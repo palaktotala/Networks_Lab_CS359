@@ -30,3 +30,9 @@ TCP handshake close -
 ARP and ARP request response
 1. Ideally after pining 8.8.8.8 I should have gotten some packets but I realised I am on mobile hotspot so I can't really sniff the packets, I only got one random packet for ARP after browsing a little but honestly I have no way to sniff the packets for these. 
 2. Logically the code should work.
+
+PING -
+Just do ping 8.8.8.8 on cmd and you'll get the packets. Was easy!
+
+DNS -
+Weirdly I get two answers instead of a question and an answer, but I guess this works too!
