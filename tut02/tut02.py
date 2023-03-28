@@ -1,3 +1,5 @@
+#I have explained the code and my thought process in readme
+
 import scapy.all as scapy
 import socket
 
@@ -21,11 +23,39 @@ def tcp_handshake_close(ip_address, interface):
     filter = "tcp and host " + ip_address + " and tcp[tcpflags] & tcp-fin != 0"
     scapy.sniff(iface=interface, store=False, filter=filter, count=2, prn=save_tcp_handshake_close)
 
+var=0
+
+def save_arp(packet):
+    global var
+    if(var==0 and packet.haslayer(scapy.ARP) and packet[scapy.ARP].op==1):
+        print(packet)
+        scapy.wrpcap("ARP_2001CS84.pcap", packet, append=True)
+        var=1
+    if(var==1 and packet.haslayer(scapy.ARP) and packet[scapy.ARP].op==2):
+        print(packet)
+        scapy.wrpcap("ARP_2001CS84.pcap", packet, append=True)
+        var=2
+
+def arp(interface):
+    filter = "arp"
+    scapy.sniff(iface=interface, store=False, filter=filter, count=10, prn=save_arp)
+
+def save_arp_request_response(packet):
+    print(packet)
+    scapy.wrpcap("ARP_Request_Response_2001CS84.pcap", packet, append=True)
+
+def arp_request_response(interface):
+    filter = "arp"
+    scapy.sniff(iface=interface, store=False, filter=filter, count=2, prn=save_arp_request_response)
+    
 def sniffer(interface, hostname):
     ip_address = socket.gethostbyname(hostname)
     print(ip_address)
     tcp_3_way_handshake_start(ip_address, interface)
     tcp_handshake_close(ip_address, interface)
+    arp(interface)
+    arp_request_response(interface)
+    var=0 #restore the value of var after it becomes 1
 
 hostname = "codeforces.com"
 interface = "Wi-Fi"
