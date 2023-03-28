@@ -26,3 +26,7 @@ TCP handshake start -
 TCP handshake close - 
 1. Created two more functions for sniffing and saving the pcaps, filter was slightly tricky. 
 2. Because of my fluctuating net and luck, I could capture two FAs instead of FA, A :(
+
+ARP and ARP request response
+1. Ideally after pining 8.8.8.8 I should have gotten some packets but I realised I am on mobile hotspot so I can't really sniff the packets, I only got one random packet for ARP after browsing a little but honestly I have no way to sniff the packets for these. 
+2. Logically the code should work.
