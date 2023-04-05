@@ -5,8 +5,6 @@ import sys
 from _thread import *
 import threading
 
-print_lock = threading.Lock()
-
 # thread function
 def threaded(c):
 
@@ -48,9 +46,6 @@ def Main():
 
 		# establish connection with client
 		c, addr = s.accept()
-
-		# lock acquired by client
-		print_lock.acquire()
 		print('Connected to :', addr[0], ':', addr[1])
 
 		# Start a new thread and return its identifier
