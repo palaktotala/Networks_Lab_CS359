@@ -8,11 +8,16 @@ try:
     #host = socket.gethostname()
     host = str(ipaddress.ip_address(sys.argv[1]))    # Reading IP Address
     port = int(sys.argv[2])                           # Reading port number
-    s.connect((host, port))                           # Connecting to server
+    try:
+        s.connect((host, port))                           # Connecting to server
+    except:
+        print("Error: Another client is already connected to server1")
+        quit()
+
     print("Connected to server")
 
-    cont='Y'
-    while(cont=='Y'):
+    
+    while(True):
         equ=input("Please enter an arithmetic equation to the server or type out Q to quit: ")
         s.send(equ.encode())
         result = s.recv(1024).decode()
@@ -30,7 +35,6 @@ try:
             print("Name error")
         else:
             print("The answer is:", result)
-            cont=input("“Do you wish to continue? Y/N: ")
             
 
     s.close 				 # Close the socket when done

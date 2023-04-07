@@ -9,25 +9,24 @@ import threading
 def threaded(c):
 
      while True:
-          try:
-               equation=c.recv(1024).decode()
-               if equation == "Q" or equation == "q" or equation == "Quit" or equation == "quit" or equation == "quit()":
-                    c.send("Quit".encode())
-                    break
-               else:
-                    print("Client has given this equation:", equation)
+          equation=c.recv(1024).decode()
+          if equation == "Q" or equation == "q" or equation == "Quit" or equation == "quit" or equation == "quit()":
+               c.send("Quit".encode())
+               break
+          else:
+               print("Client has given this equation:", equation)
+               try:
                     result = eval(equation)
                     c.send(str(result).encode())
                     print("Sending reply:", result)
-          except (ZeroDivisionError):
-               c.send("ZD".encode())
-          except (ArithmeticError):
-               c.send("ME".encode())
-          except (SyntaxError):
-               c.send("SE".encode())
-          except (NameError):
-               c.send("NE".encode())
-
+               except (ZeroDivisionError):
+                    c.send("ZD".encode())
+               except (ArithmeticError):
+                    c.send("ME".encode())
+               except (SyntaxError):
+                    c.send("SE".encode())
+               except (NameError):
+                    c.send("NE".encode())
      c.close() 			# Close the connection.
 
 
@@ -39,7 +38,7 @@ def Main():
 	s.bind((host, port)) 			 # Bind to the port
 	s.listen(5) 			         # Now wait for client connection.
 
-	print("Server has started yay!")
+	print("Server2 has started yay!")
 
 	# a forever loop until client wants to exit
 	while True:
